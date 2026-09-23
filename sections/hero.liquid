@@ -1,0 +1,239 @@
+<section class="hero" id="hero-{{ section.id }}">
+  <div class="hero__content">
+    <div class="hero__badges" role="list" aria-label="Product benefits">
+      {% for block in section.blocks %}
+        {% if block.type == 'badge' %}
+          <div class="hero__badge" role="listitem" {{ block.shopify_attributes }}>
+            <span class="hero__badge-icon" aria-hidden="true">✦</span>
+            <span>{{ block.settings.label }}</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <h1 class="hero__heading">
+      {% assign headline_parts = section.settings.headline | split: '|' %}
+      {% if headline_parts.size > 1 %}
+        {{ headline_parts[0] | strip }} <span class="hero__heading-accent">{{ headline_parts[1] | strip }}</span>
+      {% else %}
+        {{ section.settings.headline }}
+      {% endif %}
+    </h1>
+
+    <div class="hero__description">
+      {{ section.settings.description }}
+    </div>
+
+    <div class="hero__actions">
+      {% if section.settings.primary_label != blank %}
+        <a class="hero__button hero__button--primary" href="{{ section.settings.primary_link }}">
+          {{ section.settings.primary_label }}
+        </a>
+      {% endif %}
+      {% if section.settings.secondary_label != blank %}
+        <a class="hero__button hero__button--secondary" href="{{ section.settings.secondary_link }}">
+          {{ section.settings.secondary_label }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="hero__pricing" aria-label="Pricing options">
+      {% for block in section.blocks %}
+        {% if block.type == 'pricing_tier' %}
+          <div class="hero__pricing-tier" {{ block.shopify_attributes }}>
+            <h2 class="hero__pricing-label">{{ block.settings.tier_label }}</h2>
+            <div class="hero__pricing-price">{{ block.settings.price }}</div>
+            {% if block.settings.compare_at_price != blank %}
+              <div class="hero__pricing-compare">{{ block.settings.compare_at_price }}</div>
+            {% endif %}
+            {% if block.settings.savings_label != blank %}
+              <div class="hero__pricing-savings">{{ block.settings.savings_label }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Illustrated product graphic placeholder. -->
+  <div class="hero__product-placeholder" aria-hidden="true"></div>
+</section>
+
+<style>
+  #hero-{{ section.id }} {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
+    gap: 2rem;
+    align-items: center;
+    padding: 4rem 5vw;
+  }
+
+  #hero-{{ section.id }} .hero__badges,
+  #hero-{{ section.id }} .hero__actions,
+  #hero-{{ section.id }} .hero__pricing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  #hero-{{ section.id }} .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  #hero-{{ section.id }} .hero__heading {
+    font-size: clamp(2.75rem, 7vw, 6rem);
+    line-height: 0.95;
+    margin: 1.5rem 0;
+  }
+
+  #hero-{{ section.id }} .hero__heading-accent {
+    color: currentColor;
+  }
+
+  #hero-{{ section.id }} .hero__description {
+    max-width: 38rem;
+    margin-bottom: 1.5rem;
+  }
+
+  #hero-{{ section.id }} .hero__button {
+    display: inline-block;
+    padding: 0.8rem 1.25rem;
+    text-decoration: none;
+    border: 1px solid currentColor;
+  }
+
+  #hero-{{ section.id }} .hero__button--primary {
+    background: currentColor;
+  }
+
+  #hero-{{ section.id }} .hero__pricing-tier {
+    min-width: 8rem;
+  }
+
+  #hero-{{ section.id }} .hero__pricing-label,
+  #hero-{{ section.id }} .hero__pricing-price,
+  #hero-{{ section.id }} .hero__pricing-compare,
+  #hero-{{ section.id }} .hero__pricing-savings {
+    margin: 0.25rem 0;
+  }
+
+  #hero-{{ section.id }} .hero__product-placeholder {
+    min-height: 24rem;
+    border: 1px dashed currentColor;
+  }
+
+  @media screen and (max-width: 749px) {
+    #hero-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "info": "Use a pipe character (|) before the accent word, for example: Clean That | Lasts",
+      "default": "Clean That | Lasts"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it.</p>"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary button link",
+      "default": "#shop"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "How it works"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary button link",
+      "default": "#how"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Plant powered"
+        }
+      ]
+    },
+    {
+      "type": "pricing_tier",
+      "name": "Pricing tier",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tier_label",
+          "label": "Tier label",
+          "default": "Single bottle"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "₹200"
+        },
+        {
+          "type": "text",
+          "id": "compare_at_price",
+          "label": "Compare-at price",
+          "default": "₹299"
+        },
+        {
+          "type": "text",
+          "id": "savings_label",
+          "label": "Savings label",
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        { "type": "badge", "settings": { "label": "Plant powered" } },
+        { "type": "badge", "settings": { "label": "Safe for kids & pets" } },
+        { "type": "badge", "settings": { "label": "Zero harsh chemicals" } },
+        { "type": "pricing_tier", "settings": { "tier_label": "Single bottle", "price": "₹200", "compare_at_price": "₹299", "savings_label": "" } },
+        { "type": "pricing_tier", "settings": { "tier_label": "Any 2 products", "price": "₹349", "compare_at_price": "₹598", "savings_label": "Save ₹249" } },
+        { "type": "pricing_tier", "settings": { "tier_label": "Any 3 products", "price": "₹499", "compare_at_price": "₹897", "savings_label": "Save ₹398" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
