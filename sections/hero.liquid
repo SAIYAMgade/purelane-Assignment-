@@ -37,22 +37,31 @@
       {% endif %}
     </div>
 
-    <div class="hero__pricing" aria-label="Pricing options">
-      {% for block in section.blocks %}
-        {% if block.type == 'pricing_tier' %}
-          <div class="hero__pricing-tier" {{ block.shopify_attributes }}>
-            <h2 class="hero__pricing-label">{{ block.settings.tier_label }}</h2>
-            <div class="hero__pricing-price">{{ block.settings.price }}</div>
-            {% if block.settings.compare_at_price != blank %}
-              <div class="hero__pricing-compare">{{ block.settings.compare_at_price }}</div>
-            {% endif %}
-            {% if block.settings.savings_label != blank %}
-              <div class="hero__pricing-savings">{{ block.settings.savings_label }}</div>
-            {% endif %}
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+    {% assign pricing_tier_count = 0 %}
+    {% for block in section.blocks %}
+      {% if block.type == 'pricing_tier' %}
+        {% assign pricing_tier_count = pricing_tier_count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+
+    {% if pricing_tier_count > 0 %}
+      <div class="hero__pricing" aria-label="Pricing options">
+        {% for block in section.blocks %}
+          {% if block.type == 'pricing_tier' %}
+            <div class="hero__pricing-tier" {{ block.shopify_attributes }}>
+              <h2 class="hero__pricing-label">{{ block.settings.tier_label }}</h2>
+              <div class="hero__pricing-price">{{ block.settings.price }}</div>
+              {% if block.settings.compare_at_price != blank %}
+                <div class="hero__pricing-compare">{{ block.settings.compare_at_price }}</div>
+              {% endif %}
+              {% if block.settings.savings_label != blank %}
+                <div class="hero__pricing-savings">{{ block.settings.savings_label }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 
   <!-- Illustrated product graphic placeholder. -->
@@ -160,8 +169,7 @@
     {
       "type": "url",
       "id": "primary_link",
-      "label": "Primary button link",
-      "default": "#shop"
+      "label": "Primary button link"
     },
     {
       "type": "text",
@@ -172,8 +180,7 @@
     {
       "type": "url",
       "id": "secondary_link",
-      "label": "Secondary button link",
-      "default": "#how"
+      "label": "Secondary button link"
     }
   ],
   "blocks": [
@@ -225,6 +232,10 @@
   "presets": [
     {
       "name": "Hero",
+      "settings": {
+        "primary_link": "#shop",
+        "secondary_link": "#how"
+      },
       "blocks": [
         { "type": "badge", "settings": { "label": "Plant powered" } },
         { "type": "badge", "settings": { "label": "Safe for kids & pets" } },
