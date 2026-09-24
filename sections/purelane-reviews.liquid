@@ -1,0 +1,170 @@
+{{ 'section-purelane-reviews.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="purelane-reviews-{{ section.id }}"
+  class="purelane-reviews color-{{ section.settings.color_scheme }} gradient"
+  aria-labelledby="purelane-reviews-heading-{{ section.id }}"
+  data-marquee-enabled="{{ section.settings.enable_marquee }}"
+>
+  <div class="purelane-reviews__wrap">
+    <header class="purelane-reviews__header">
+      <h2 id="purelane-reviews-heading-{{ section.id }}" class="purelane-reviews__kicker">
+        {{ section.settings.kicker | escape }}
+      </h2>
+
+      {%- if section.settings.show_aggregate -%}
+        {%- if section.settings.aggregate_rating != blank or section.settings.aggregate_review_count != blank or section.settings.customer_count != blank -%}
+          <div class="purelane-reviews__aggregate" aria-label="Review summary">
+            {%- if section.settings.aggregate_rating != blank -%}
+              <span class="purelane-reviews__aggregate-item">
+                <span class="purelane-reviews__aggregate-stars" aria-hidden="true">★★★★★</span>
+                <span>{{ section.settings.aggregate_rating | escape }}</span>
+              </span>
+            {%- endif -%}
+
+            {%- if section.settings.aggregate_review_count != blank -%}
+              <span class="purelane-reviews__aggregate-item">{{ section.settings.aggregate_review_count | escape }}</span>
+            {%- endif -%}
+
+            {%- if section.settings.customer_count != blank -%}
+              <span class="purelane-reviews__aggregate-item">{{ section.settings.customer_count | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="purelane-reviews__rail" aria-label="Customer reviews">
+        <div class="purelane-reviews__track">
+          {%- for block in section.blocks -%}
+            {% render 'purelane-review-card', block: block %}
+          {%- endfor -%}
+        </div>
+
+        <div class="purelane-reviews__track" aria-hidden="true">
+          {%- for block in section.blocks -%}
+            {% render 'purelane-review-card', block: block, duplicate: true %}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- elsif request.design_mode -%}
+      <p class="purelane-reviews__empty" role="status">
+        Add a review block to begin building this section.
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Reviews",
+  "tag": "section",
+  "class": "section-purelane-reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "That's what they said"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_aggregate",
+      "label": "Show aggregate review information",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "aggregate_rating",
+      "label": "Aggregate rating"
+    },
+    {
+      "type": "text",
+      "id": "aggregate_review_count",
+      "label": "Aggregate review count"
+    },
+    {
+      "type": "text",
+      "id": "customer_count",
+      "label": "Customer count"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_marquee",
+      "label": "Enable review marquee",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "review_title",
+          "label": "Review title"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name"
+        },
+        {
+          "type": "text",
+          "id": "product_label",
+          "label": "Product or category label"
+        },
+        {
+          "type": "select",
+          "id": "rating",
+          "label": "Rating",
+          "default": "no_rating",
+          "options": [
+            { "value": "no_rating", "label": "No rating" },
+            { "value": "1", "label": "1 out of 5" },
+            { "value": "2", "label": "2 out of 5" },
+            { "value": "3", "label": "3 out of 5" },
+            { "value": "4", "label": "4 out of 5" },
+            { "value": "5", "label": "5 out of 5" }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Purelane Reviews"
+    }
+  ]
+}
+{% endschema %}

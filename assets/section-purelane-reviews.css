@@ -1,0 +1,139 @@
+.purelane-reviews {
+  padding: 34px 0;
+}
+
+.purelane-reviews__wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+.purelane-reviews__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 18px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.purelane-reviews__kicker {
+  margin: 0;
+  color: rgba(var(--color-foreground), .72);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.purelane-reviews__aggregate {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 18px;
+  color: rgba(var(--color-foreground), .72);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.purelane-reviews__aggregate-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.purelane-reviews__aggregate-stars,
+.purelane-review-card__rating {
+  color: currentColor;
+  letter-spacing: .16em;
+}
+
+.purelane-reviews__rail {
+  display: flex;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.purelane-reviews__track {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 12px;
+}
+
+.purelane-review-card {
+  flex: 0 0 284px;
+  min-width: 0;
+  padding: 15px 17px;
+  border: 1px solid rgba(var(--color-foreground), .14);
+  border-radius: 18px;
+}
+
+.purelane-review-card__rating {
+  margin-bottom: 9px;
+  font-size: 1.05rem;
+}
+
+.purelane-review-card__title {
+  margin: 0 0 7px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.purelane-review-card__quote {
+  margin: 0 0 11px;
+  color: rgba(var(--color-foreground), .78);
+  font-size: 1.26rem;
+  line-height: 1.52;
+}
+
+.purelane-review-card__footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  color: rgba(var(--color-foreground), .58);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.purelane-review-card__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.purelane-review-card__verified {
+  color: currentColor;
+  font-size: 1.2rem;
+}
+
+.purelane-review-card__reviewer {
+  color: inherit;
+}
+
+.purelane-reviews__empty {
+  padding: 20px;
+  border: 1px dashed rgba(var(--color-foreground), .24);
+  text-align: center;
+}
+
+@media screen and (max-width: 760px) {
+  .purelane-reviews {
+    padding: 22px 0;
+  }
+
+  .purelane-review-card {
+    flex-basis: 250px;
+    padding: 13px 14px;
+  }
+}

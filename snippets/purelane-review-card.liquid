@@ -1,0 +1,47 @@
+{%- liquid
+  assign review_rating = block.settings.rating
+  assign review_rating_number = review_rating | plus: 0
+-%}
+
+<article class="purelane-review-card" {{ block.shopify_attributes }}>
+  {%- if review_rating != blank and review_rating != 'no_rating' -%}
+    <div class="purelane-review-card__rating" aria-label="Rated {{ review_rating_number }} out of 5">
+      <span aria-hidden="true">
+        {%- for star in (1..review_rating_number) -%}★{%- endfor -%}
+      </span>
+      <span class="visually-hidden">Rated {{ review_rating_number }} out of 5</span>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.review_title != blank -%}
+    <h3 class="purelane-review-card__title">{{ block.settings.review_title | escape }}</h3>
+  {%- endif -%}
+
+  {%- if block.settings.quote != blank -%}
+    <p class="purelane-review-card__quote">{{ block.settings.quote | escape }}</p>
+  {%- endif -%}
+
+  {%- if block.settings.avatar != blank or block.settings.reviewer_name != blank or block.settings.product_label != blank or block.settings.date != blank -%}
+    <footer class="purelane-review-card__footer">
+      {%- if block.settings.avatar != blank -%}
+        {{ block.settings.avatar | image_url: width: 48 | image_tag: loading: 'lazy', widths: '24, 48', sizes: '24px', class: 'purelane-review-card__avatar', alt: block.settings.reviewer_name | escape }}
+      {%- endif -%}
+
+      {%- if block.settings.verified -%}
+        <span class="purelane-review-card__verified" aria-hidden="true">✓</span>
+      {%- endif -%}
+
+      {%- if block.settings.reviewer_name != blank -%}
+        <span class="purelane-review-card__reviewer">{{ block.settings.reviewer_name | escape }}</span>
+      {%- endif -%}
+
+      {%- if block.settings.product_label != blank -%}
+        <span class="purelane-review-card__product">· {{ block.settings.product_label | escape }}</span>
+      {%- endif -%}
+
+      {%- if block.settings.date != blank -%}
+        <span class="purelane-review-card__date">· {{ block.settings.date | escape }}</span>
+      {%- endif -%}
+    </footer>
+  {%- endif -%}
+</article>
