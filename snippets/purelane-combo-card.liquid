@@ -7,13 +7,17 @@
 -%}
 
 <article
-  class="purelane-combo-card{% if block.settings.featured %} purelane-combo-card--featured{% endif %}"
+  class="purelane-combo-card purelane-combo-card--reveal purelane-combo-card--delay-{{ reveal_index | default: 0 }}{% if block.settings.featured %} purelane-combo-card--featured{% endif %}"
   role="listitem"
   {{ block.shopify_attributes }}
 >
   <div class="purelane-combo-card__tray">
-    {%- if block.settings.badge_label != blank -%}
+    {%- if block.settings.badge_label != blank and block.settings.featured == false -%}
       <span class="purelane-combo-card__badge">{{ block.settings.badge_label | escape }}</span>
+    {%- endif -%}
+
+    {%- if block.settings.badge_label != blank and block.settings.featured -%}
+      <span class="purelane-combo-card__flag">{{ block.settings.badge_label | escape }}</span>
     {%- endif -%}
 
     <div class="purelane-combo-card__products">
@@ -31,7 +35,6 @@
             {%- endif -%}
           </span>
           <span class="purelane-combo-card__product-title">{{ product.title | escape }}</span>
-          <span class="purelane-combo-card__product-price">{{ product.price | money }}</span>
         </a>
       {%- else -%}
         <p class="purelane-combo-card__products-empty">Select products for this combo.</p>
