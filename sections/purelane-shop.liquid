@@ -91,8 +91,8 @@
 
   #purelane-shop-{{ section.id }} .purelane-shop__kicker {
     margin: 0;
-    color: rgb(var(--color-foreground));
-    font-size: 1.1rem;
+    color: var(--purelane-shop-paper-3);
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: .22em;
     line-height: 1.3;
@@ -101,9 +101,13 @@
 
   #purelane-shop-{{ section.id }} .purelane-shop__heading {
     margin: 12px 0 0;
-    color: rgb(var(--color-foreground));
-    font-size: clamp(3rem, 4.6vw, 5.4rem);
+    color: var(--purelane-shop-surface);
+    font-family: var(--font-heading-family);
+    font-size: clamp(30px, 4.6vw, 54px);
+    font-weight: 800;
+    letter-spacing: -.018em;
     line-height: .94;
+    text-transform: uppercase;
   }
 
   #purelane-shop-{{ section.id }} .purelane-shop__rule {
@@ -184,6 +188,8 @@
     }
   }
 </style>
+
+{{ 'section-purelane-shop.css' | asset_url | stylesheet_tag }}
 
 {% schema %}
 {

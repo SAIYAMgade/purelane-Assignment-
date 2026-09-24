@@ -1,0 +1,326 @@
+.purelane-shop {
+  --purelane-shop-ink: #f4f0fb;
+  --purelane-shop-deep: #e2daf3;
+  --purelane-shop-brand: #4b3a8f;
+  --purelane-shop-brand-lt: #6b55b8;
+  --purelane-shop-paper: #241a3d;
+  --purelane-shop-paper-2: rgba(36, 26, 61, .78);
+  --purelane-shop-paper-3: rgba(36, 26, 61, .56);
+  --purelane-shop-accent: #b8701c;
+  --purelane-shop-accent-2: #c9761d;
+  --purelane-shop-surface: #17102b;
+  --purelane-shop-radius: 26px;
+  --purelane-shop-radius-small: 16px;
+  --purelane-shop-ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+.purelane-shop .purelane-shop__kicker {
+  color: var(--purelane-shop-paper-3);
+  font-family: var(--font-body-family);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.purelane-shop .purelane-shop__heading {
+  color: var(--purelane-shop-surface);
+  font-family: var(--font-heading-family);
+  font-size: clamp(3rem, 4.6vw, 5.4rem);
+  font-weight: 800;
+  letter-spacing: -.018em;
+  line-height: .94;
+  text-transform: uppercase;
+}
+
+.purelane-shop .purelane-shop__rule {
+  color: var(--purelane-shop-brand);
+}
+
+.purelane-shop .purelane-shop__rule span {
+  background: linear-gradient(90deg, rgba(75, 58, 143, .34), transparent);
+}
+
+.purelane-shop .purelane-shop__rule span:last-child {
+  background: linear-gradient(90deg, transparent, rgba(75, 58, 143, .34));
+}
+
+.purelane-shop .purelane-shop__description {
+  color: var(--purelane-shop-paper-2);
+}
+
+.purelane-shop .purelane-shop__grid {
+  align-items: stretch;
+}
+
+.purelane-shop .purelane-shop__item {
+  min-width: 0;
+}
+
+.purelane-shop .purelane-product-card {
+  position: relative;
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  flex-direction: column;
+  padding: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(75, 58, 143, .13);
+  border-radius: var(--purelane-shop-radius);
+  background: linear-gradient(158deg, rgba(255, 255, 255, .80), rgba(236, 230, 247, .56) 58%, rgba(222, 212, 240, .50));
+  box-shadow: 0 22px 54px rgba(58, 44, 112, .13), inset 0 1px 0 rgba(255, 255, 255, .92);
+  transition: transform .4s var(--purelane-shop-ease), box-shadow .4s var(--purelane-shop-ease);
+}
+
+.purelane-shop .purelane-product-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255, 255, 255, .55), transparent 32%, transparent 74%, rgba(201, 118, 29, .06));
+  content: '';
+  pointer-events: none;
+}
+
+.purelane-shop .purelane-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 28px 62px rgba(58, 44, 112, .17), inset 0 1px 0 rgba(255, 255, 255, .92);
+}
+
+.purelane-shop .purelane-product-card__media,
+.purelane-shop .purelane-product-card__content {
+  position: relative;
+  z-index: 1;
+}
+
+.purelane-shop .purelane-product-card__media {
+  display: grid;
+  height: 150px;
+  margin-bottom: 14px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(75, 58, 143, .10);
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .60), rgba(236, 230, 247, .42));
+}
+
+.purelane-shop .purelane-product-card__media-link {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.purelane-shop .purelane-product-card__media img,
+.purelane-shop .purelane-product-card__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.purelane-shop .purelane-product-card__media img:first-child {
+  filter: drop-shadow(0 8px 13px rgba(0, 74, 66, .13));
+}
+
+.purelane-shop .purelane-product-card__media img + img {
+  position: absolute;
+  inset: 0;
+  padding: 8px;
+  opacity: 0;
+  transition: opacity .35s var(--purelane-shop-ease);
+}
+
+.purelane-shop .purelane-product-card:hover .purelane-product-card__media img + img,
+.purelane-shop .purelane-product-card:focus-within .purelane-product-card__media img + img {
+  opacity: 1;
+}
+
+.purelane-shop .purelane-product-card__badge {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  z-index: 2;
+  max-width: calc(100% - 18px);
+  padding: 4px 9px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 118, 29, .34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .86);
+  color: #4f7d10;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.purelane-shop .purelane-product-card__content {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.purelane-shop .purelane-product-card__title {
+  margin: 0 0 7px;
+  overflow-wrap: anywhere;
+  color: var(--purelane-shop-surface);
+  font-family: var(--font-heading-family);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.purelane-shop .purelane-product-card__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.purelane-shop .purelane-product-card__title a:focus-visible,
+.purelane-shop .purelane-product-card__media-link:focus-visible,
+.purelane-shop .purelane-product-card__button:focus-visible {
+  outline: 2px solid var(--purelane-shop-accent);
+  outline-offset: 3px;
+}
+
+.purelane-shop .purelane-product-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  color: var(--purelane-shop-paper-2);
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.purelane-shop .purelane-product-card__rating .rating-star {
+  --color-rating-star: var(--purelane-shop-accent);
+  --font-size: 1.1;
+  --letter-spacing: .3;
+}
+
+.purelane-shop .purelane-product-card__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 12px;
+}
+
+.purelane-shop .purelane-product-card__price .price {
+  margin: 0;
+  color: var(--purelane-shop-surface);
+  font-family: var(--font-heading-family);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.purelane-shop .purelane-product-card__price .price-item--regular {
+  color: var(--purelane-shop-paper-3);
+  font-size: 1.2rem;
+}
+
+.purelane-shop .purelane-product-card__price .price--on-sale .price-item--regular {
+  font-size: 1.2rem;
+}
+
+.purelane-shop .purelane-product-card__discount {
+  color: var(--purelane-shop-accent);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.purelane-shop .purelane-product-card__actions,
+.purelane-shop .purelane-product-card__actions product-form,
+.purelane-shop .purelane-product-card__actions form,
+.purelane-shop .purelane-product-card__actions modal-opener {
+  display: block;
+  width: 100%;
+}
+
+.purelane-shop .purelane-product-card__button {
+  display: inline-flex;
+  width: 100%;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border: 1px solid rgba(75, 58, 143, .22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .66);
+  color: #01423b;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  transition: transform .35s var(--purelane-shop-ease), background .35s var(--purelane-shop-ease), box-shadow .35s var(--purelane-shop-ease);
+}
+
+.purelane-shop .purelane-product-card__button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 8px 18px rgba(58, 44, 112, .10);
+  transform: translateY(-2px);
+}
+
+.purelane-shop .purelane-product-card__button:disabled {
+  cursor: not-allowed;
+  opacity: .58;
+}
+
+.purelane-shop .purelane-product-card__empty,
+.purelane-shop .purelane-product-card__placeholder {
+  color: var(--purelane-shop-paper-3);
+}
+
+@media screen and (max-width: 760px) {
+  .purelane-shop .purelane-product-card__media {
+    height: 126px;
+  }
+
+  .purelane-shop .purelane-product-card__media img,
+  .purelane-shop .purelane-product-card__placeholder,
+  .purelane-shop .purelane-product-card__media img + img {
+    padding: 6px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .purelane-shop .purelane-product-card {
+    padding: 14px;
+  }
+
+  .purelane-shop .purelane-product-card__title {
+    font-size: 1.25rem;
+  }
+
+  .purelane-shop .purelane-product-card__badge {
+    max-width: calc(100% - 12px);
+    padding-right: 6px;
+    padding-left: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .purelane-shop .purelane-product-card,
+  .purelane-shop .purelane-product-card__button,
+  .purelane-shop .purelane-product-card__media img + img {
+    transition-duration: .01ms !important;
+  }
+}

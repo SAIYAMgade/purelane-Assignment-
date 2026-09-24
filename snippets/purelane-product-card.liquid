@@ -26,6 +26,11 @@
   assign product_badge = product.metafields.custom.card_badge.value
   assign product_rating = product.metafields.reviews.rating.value
   assign product_rating_count = product.metafields.reviews.rating_count
+  assign discount_percent = 0
+  if product.compare_at_price > product.price
+    assign discount_amount = product.compare_at_price | minus: product.price
+    assign discount_percent = discount_amount | times: 100 | divided_by: product.compare_at_price | round
+  endif
 -%}
 
 {%- if product and product != empty -%}
@@ -105,6 +110,9 @@
 
       <div class="purelane-product-card__price">
         {% render 'price', product: product, price_class: '', show_compare_at_price: true %}
+        {% if discount_percent > 0 %}
+          <span class="purelane-product-card__discount">{{ discount_percent }}% off</span>
+        {% endif %}
       </div>
 
       <div class="purelane-product-card__actions">
