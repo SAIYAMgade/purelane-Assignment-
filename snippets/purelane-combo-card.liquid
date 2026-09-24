@@ -22,16 +22,20 @@
 
     <div class="purelane-combo-card__products">
       {%- for product in combo_products -%}
+        {%- liquid
+          assign combo_media = product.featured_media | default: product.featured_image
+          assign combo_initial = product.title | strip | slice: 0, 1 | upcase
+        -%}
         {%- if forloop.index > 1 -%}
           <span class="purelane-combo-card__plus" aria-hidden="true">+</span>
         {%- endif -%}
 
         <a class="purelane-combo-card__product" href="{{ product.url }}">
           <span class="purelane-combo-card__product-media">
-            {%- if product.featured_media != blank -%}
-              {{ product.featured_media | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90, 120, 180', sizes: '80px', alt: product.featured_media.alt | default: product.title | escape }}
+            {%- if combo_media != blank -%}
+              {{ combo_media | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90, 120, 180', sizes: '80px', alt: combo_media.alt | default: product.title | escape }}
             {%- else -%}
-              <span class="purelane-combo-card__product-placeholder" aria-hidden="true">{{ 'product-apparel-2' | placeholder_svg_tag }}</span>
+              <span class="purelane-combo-card__product-placeholder" aria-hidden="true">{{ combo_initial }}</span>
             {%- endif -%}
           </span>
           <span class="purelane-combo-card__product-title">{{ product.title | escape }}</span>

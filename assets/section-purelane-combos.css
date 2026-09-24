@@ -160,6 +160,7 @@
 .purelane-combo-card__product {
   min-width: 0;
   flex: 1 1 0;
+  overflow: hidden;
   color: inherit;
   text-align: center;
   text-decoration: none;
@@ -178,19 +179,39 @@
 }
 
 .purelane-combo-card__product-media img,
-.purelane-combo-card__product-placeholder svg {
+.purelane-combo-card__product-placeholder {
   display: block;
   max-width: 100%;
   height: 66px;
   object-fit: contain;
 }
 
+.purelane-combo-card__product-placeholder {
+  display: grid;
+  width: 44px;
+  place-items: center;
+  margin: 0 auto;
+  border: 1px solid rgba(75, 58, 143, .16);
+  border-radius: 9px;
+  background: rgba(75, 58, 143, .08);
+  color: var(--purelane-combos-accent);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
 .purelane-combo-card__product-title {
   display: block;
+  width: 100%;
+  min-height: 2.64em;
   color: var(--purelane-combos-paper-2);
   font-size: .95rem;
   font-weight: 600;
   line-height: 1.32;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .purelane-combo-card__plus {
@@ -313,7 +334,7 @@
   }
 
   .purelane-combo-card__product-media img,
-  .purelane-combo-card__product-placeholder svg {
+  .purelane-combo-card__product-placeholder {
     height: 56px;
   }
 }

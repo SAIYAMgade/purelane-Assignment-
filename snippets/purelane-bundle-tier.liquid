@@ -21,6 +21,7 @@
     {%- for product in tier_products -%}
       {%- liquid
         assign tier_media = product.featured_media | default: product.featured_image
+        assign tier_initial = product.title | strip | slice: 0, 1 | upcase
         assign tier_variant = product.selected_or_first_available_variant
         assign tier_available = false
         if product.available and tier_variant != blank and tier_variant.available
@@ -38,7 +39,7 @@
           {%- if tier_media != blank -%}
             {{ tier_media | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 180, 240', sizes: '(min-width: 760px) 120px, 25vw', alt: tier_media.alt | default: product.title }}
           {%- else -%}
-            {{ 'product-apparel-2' | placeholder_svg_tag: 'purelane-bundle-tier__placeholder' }}
+            <span class="purelane-bundle-tier__placeholder" aria-hidden="true">{{ tier_initial }}</span>
           {%- endif -%}
         </span>
         <span class="purelane-bundle-tier__product-title">{{ product.title | escape }}</span>

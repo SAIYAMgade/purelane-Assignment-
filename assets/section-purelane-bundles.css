@@ -141,6 +141,7 @@
 .purelane-bundle-tier__product {
   min-width: 0;
   flex: 1 1 0;
+  overflow: hidden;
   color: inherit;
   text-align: center;
   text-decoration: none;
@@ -168,6 +169,19 @@
   object-fit: contain;
 }
 
+.purelane-bundle-tier__placeholder {
+  display: grid;
+  width: 44px;
+  place-items: center;
+  margin: 0 auto;
+  border: 1px solid rgba(75, 58, 143, .16);
+  border-radius: 9px;
+  background: rgba(75, 58, 143, .08);
+  color: var(--purelane-bundles-accent);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
 .purelane-bundle-tier__artwork--five .purelane-bundle-tier__product-image img,
 .purelane-bundle-tier__artwork--five .purelane-bundle-tier__placeholder {
   height: 54px;
@@ -175,12 +189,19 @@
 
 .purelane-bundle-tier__product-title {
   display: block;
+  width: 100%;
+  min-height: 2.7em;
   margin-top: 6px;
   color: var(--purelane-bundles-paper-2);
   font-weight: 600;
   font-size: 1.1rem;
   line-height: 1.35;
+  overflow: hidden;
   overflow-wrap: anywhere;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .purelane-bundle-tier__product--sold-out {
