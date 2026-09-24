@@ -1,4 +1,9 @@
 .purelane-reviews {
+  --purelane-reviews-accent: #b8701c;
+  --purelane-reviews-surface: #17102b;
+  --purelane-reviews-paper-2: rgba(36, 26, 61, .78);
+  --purelane-reviews-paper-3: rgba(36, 26, 61, .56);
+  --purelane-reviews-ease: cubic-bezier(.2, .7, .2, 1);
   padding: 34px 0;
 }
 
@@ -20,10 +25,10 @@
 
 .purelane-reviews__kicker {
   margin: 0;
-  color: rgba(var(--color-foreground), .72);
-  font-size: 1.1rem;
+  color: var(--purelane-reviews-paper-2);
+  font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: .16em;
+  letter-spacing: .14em;
   text-transform: uppercase;
 }
 
@@ -33,7 +38,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px 18px;
-  color: rgba(var(--color-foreground), .72);
+  color: var(--purelane-reviews-paper-2);
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: .12em;
@@ -48,28 +53,39 @@
 
 .purelane-reviews__aggregate-stars,
 .purelane-review-card__rating {
-  color: currentColor;
+  color: var(--purelane-reviews-accent);
   letter-spacing: .16em;
 }
 
 .purelane-reviews__rail {
-  display: flex;
-  gap: 12px;
+  position: relative;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
 }
 
 .purelane-reviews__track {
   display: flex;
+  width: max-content;
+  animation: purelane-reviews-marquee 52s linear infinite;
+  will-change: transform;
+}
+
+.purelane-reviews__track-set {
+  display: flex;
   flex: 0 0 auto;
   gap: 12px;
+  padding-right: 12px;
 }
 
 .purelane-review-card {
   flex: 0 0 284px;
   min-width: 0;
   padding: 15px 17px;
-  border: 1px solid rgba(var(--color-foreground), .14);
+  border: 1px solid rgba(75, 58, 143, .13);
   border-radius: 18px;
+  background: linear-gradient(158deg, rgba(255, 255, 255, .66), rgba(236, 230, 247, .44));
+  box-shadow: 0 16px 38px rgba(58, 44, 112, .10), inset 0 1px 0 rgba(255, 255, 255, .86);
 }
 
 .purelane-review-card__rating {
@@ -79,6 +95,8 @@
 
 .purelane-review-card__title {
   margin: 0 0 7px;
+  color: var(--purelane-reviews-surface);
+  font-family: var(--font-heading-family);
   font-size: 1.2rem;
   font-weight: 700;
   line-height: 1.2;
@@ -87,9 +105,10 @@
 
 .purelane-review-card__quote {
   margin: 0 0 11px;
-  color: rgba(var(--color-foreground), .78);
+  color: var(--purelane-reviews-paper-2);
   font-size: 1.26rem;
   line-height: 1.52;
+  overflow-wrap: anywhere;
 }
 
 .purelane-review-card__footer {
@@ -97,7 +116,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 5px;
-  color: rgba(var(--color-foreground), .58);
+  color: var(--purelane-reviews-paper-3);
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: .1em;
@@ -118,13 +137,39 @@
 }
 
 .purelane-review-card__reviewer {
-  color: inherit;
+  color: var(--purelane-reviews-surface);
 }
 
 .purelane-reviews__empty {
   padding: 20px;
   border: 1px dashed rgba(var(--color-foreground), .24);
   text-align: center;
+}
+
+@keyframes purelane-reviews-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.purelane-reviews__rail:hover .purelane-reviews__track,
+.purelane-reviews__rail:focus-within .purelane-reviews__track {
+  animation-play-state: paused;
+}
+
+.purelane-reviews[data-marquee-enabled='false'] .purelane-reviews__rail {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+
+.purelane-reviews[data-marquee-enabled='false'] .purelane-reviews__track {
+  animation: none;
 }
 
 @media screen and (max-width: 760px) {
@@ -135,5 +180,24 @@
   .purelane-review-card {
     flex-basis: 250px;
     padding: 13px 14px;
+  }
+
+  .purelane-reviews__track {
+    animation-duration: 40s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .purelane-reviews__rail {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .purelane-reviews__track {
+    animation: none;
+    transform: none;
+    will-change: auto;
   }
 }

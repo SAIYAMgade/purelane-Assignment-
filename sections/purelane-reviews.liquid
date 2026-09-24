@@ -37,15 +37,17 @@
     {%- if section.blocks.size > 0 -%}
       <div class="purelane-reviews__rail" aria-label="Customer reviews">
         <div class="purelane-reviews__track">
-          {%- for block in section.blocks -%}
-            {% render 'purelane-review-card', block: block %}
-          {%- endfor -%}
-        </div>
+          <div class="purelane-reviews__track-set">
+            {%- for block in section.blocks -%}
+              {% render 'purelane-review-card', block: block %}
+            {%- endfor -%}
+          </div>
 
-        <div class="purelane-reviews__track" aria-hidden="true">
-          {%- for block in section.blocks -%}
-            {% render 'purelane-review-card', block: block, duplicate: true %}
-          {%- endfor -%}
+          <div class="purelane-reviews__track-set" aria-hidden="true" inert>
+            {%- for block in section.blocks -%}
+              {% render 'purelane-review-card', block: block, duplicate: true %}
+            {%- endfor -%}
+          </div>
         </div>
       </div>
     {%- elsif request.design_mode -%}
