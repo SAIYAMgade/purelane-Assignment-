@@ -8,6 +8,7 @@
   - show_rating: {Boolean} Show populated Shopify review metafields.
   - show_badge: {Boolean} Show product.metafields.custom.card_badge.
   - show_secondary_image: {Boolean} Show the second product image on hover.
+  - image_ratio: {String} Requested image ratio from the parent section.
   - lazy_load: {Boolean} Lazy-load the product image. Default: true.
 
   Usage:
@@ -18,6 +19,7 @@
   assign card_section_id = section_id | default: 'purelane-product-card'
   assign card_quick_add = quick_add | default: 'standard'
   assign card_lazy_load = lazy_load | default: true
+  assign card_image_ratio = image_ratio | default: 'adapt'
   assign card_media = product.featured_media | default: product.featured_image
   assign card_variant = product.selected_or_first_available_variant
   assign product_form_id = 'purelane-product-form-' | append: card_section_id | append: '-' | append: product.id
@@ -28,7 +30,7 @@
 
 {%- if product and product != empty -%}
   <article class="purelane-product-card" data-product-id="{{ product.id }}">
-    <div class="purelane-product-card__media">
+    <div class="purelane-product-card__media purelane-product-card__media--{{ card_image_ratio }}">
       {%- if show_badge and product_badge != blank -%}
         <span class="purelane-product-card__badge">{{ product_badge | escape }}</span>
       {%- endif -%}

@@ -1,3 +1,15 @@
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.show_rating -%}
+  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+{%- unless section.settings.quick_add == 'none' -%}
+  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+{%- endunless -%}
+
 <section
   id="purelane-shop-{{ section.id }}"
   class="purelane-shop color-{{ section.settings.color_scheme }} gradient"
@@ -40,13 +52,16 @@
       <ul class="purelane-shop__grid" role="list">
         {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
           <li class="purelane-shop__item">
-            <article class="purelane-shop__placeholder">
-              <h3 class="purelane-shop__product-title" id="purelane-shop-product-{{ section.id }}-{{ product.id }}">
-                <a href="{{ product.url }}" aria-labelledby="purelane-shop-product-{{ section.id }}-{{ product.id }}">
-                  {{ product.title | escape }}
-                </a>
-              </h3>
-            </article>
+            {% render 'purelane-product-card',
+              product: product,
+              section_id: section.id,
+              show_rating: section.settings.show_rating,
+              show_badge: section.settings.show_badges,
+              quick_add: section.settings.quick_add,
+              show_secondary_image: section.settings.show_secondary_image,
+              image_ratio: section.settings.image_ratio,
+              lazy_load: true
+            %}
           </li>
         {% endfor %}
       </ul>
