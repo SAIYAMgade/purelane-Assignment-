@@ -1,0 +1,236 @@
+.purelane-bundles {
+  padding: 34px 0;
+}
+
+.purelane-bundles__wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+.purelane-bundles__header {
+  margin-bottom: 16px;
+}
+
+.purelane-bundles__header-panel,
+.purelane-bundle-tier {
+  border: 1px solid rgba(var(--color-foreground), .14);
+  border-radius: 26px;
+  background: rgba(var(--color-background), .5);
+}
+
+.purelane-bundles__header-panel {
+  padding: clamp(26px, 3.4vw, 40px);
+  text-align: center;
+}
+
+.purelane-bundles__kicker {
+  margin: 0;
+  color: rgba(var(--color-foreground), .62);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.purelane-bundles__heading {
+  margin: 12px 0 0;
+}
+
+.purelane-bundles__description {
+  max-width: 62ch;
+  margin: 14px auto 0;
+}
+
+.purelane-bundles__tiers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.purelane-bundle-tier {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 24px 22px;
+}
+
+.purelane-bundle-tier--featured {
+  border-color: rgba(var(--color-foreground), .3);
+}
+
+.purelane-bundle-tier__tag {
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 5px 11px;
+  border: 1px solid rgba(var(--color-foreground), .18);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.purelane-bundle-tier__artwork {
+  display: flex;
+  min-height: 78px;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  margin: -4px 0 16px;
+  padding: 8px 6px;
+  overflow: hidden;
+  border: 1px solid rgba(var(--color-foreground), .12);
+  border-radius: 14px;
+}
+
+.purelane-bundle-tier__product {
+  min-width: 0;
+  flex: 1 1 0;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+}
+
+.purelane-bundle-tier__product-image {
+  display: grid;
+  height: 62px;
+  place-items: center;
+}
+
+.purelane-bundle-tier__product-image img,
+.purelane-bundle-tier__placeholder {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 62px;
+  object-fit: contain;
+}
+
+.purelane-bundle-tier__artwork--five .purelane-bundle-tier__product-image img,
+.purelane-bundle-tier__artwork--five .purelane-bundle-tier__placeholder {
+  height: 54px;
+}
+
+.purelane-bundle-tier__product-title {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.purelane-bundle-tier__product--sold-out {
+  opacity: .62;
+}
+
+.purelane-bundle-tier__sold-out {
+  display: block;
+  margin-top: 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.purelane-bundle-tier__plus {
+  flex: 0 0 10px;
+  align-self: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.purelane-bundle-tier__count {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4px;
+}
+
+.purelane-bundle-tier__count strong {
+  font-size: 5.2rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: .9;
+}
+
+.purelane-bundle-tier__count span {
+  margin-top: 6px;
+  color: rgba(var(--color-foreground), .56);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.purelane-bundle-tier__description {
+  margin: 14px 0 0;
+}
+
+.purelane-bundle-tier__benefits {
+  margin: 16px 0 20px;
+}
+
+.purelane-bundle-tier__benefits ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.purelane-bundle-tier__benefits li {
+  position: relative;
+  padding-left: 22px;
+}
+
+.purelane-bundle-tier__benefits li::before {
+  position: absolute;
+  top: .15em;
+  left: 0;
+  content: '✓';
+}
+
+.purelane-bundle-tier__fine-print {
+  margin: 0 0 14px;
+  color: rgba(var(--color-foreground), .62);
+  font-size: 1.1rem;
+}
+
+.purelane-bundle-tier__cta {
+  display: inline-flex;
+  width: 100%;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  padding: 0 22px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+}
+
+.purelane-bundle-tier__product:focus-visible,
+.purelane-bundle-tier__cta:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.purelane-bundles__empty {
+  padding: 20px;
+  border: 1px dashed rgba(var(--color-foreground), .24);
+  text-align: center;
+}
+
+@media screen and (min-width: 760px) {
+  .purelane-bundles__tiers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .purelane-bundles {
+    padding: 22px 0;
+  }
+}

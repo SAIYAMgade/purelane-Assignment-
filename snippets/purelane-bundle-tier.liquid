@@ -1,0 +1,82 @@
+{%- liquid
+  assign tier_products = block.settings.products
+  assign tier_product_count = tier_products.size | default: 0
+  assign tier_count_label = block.settings.product_count_label | default: 'Products'
+  assign tier_link = block.settings.cta_link
+  if tier_link == blank and tier_products != blank
+    assign tier_link = tier_products.first.url
+  endif
+-%}
+
+<article
+  class="purelane-bundle-tier{% if block.settings.featured %} purelane-bundle-tier--featured{% endif %}"
+  role="listitem"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.tier_label != blank -%}
+    <span class="purelane-bundle-tier__tag">{{ block.settings.tier_label | escape }}</span>
+  {%- endif -%}
+
+  <div class="purelane-bundle-tier__artwork{% if tier_product_count == 5 %} purelane-bundle-tier__artwork--five{% endif %}" aria-label="Selected bundle products">
+    {%- for product in tier_products -%}
+      {%- liquid
+        assign tier_media = product.featured_media | default: product.featured_image
+        assign tier_variant = product.selected_or_first_available_variant
+        assign tier_available = false
+        if product.available and tier_variant != blank and tier_variant.available
+          assign tier_available = true
+        endif
+      -%}
+      <a
+        class="purelane-bundle-tier__product{% unless tier_available %} purelane-bundle-tier__product--sold-out{% endunless %}"
+        href="{{ product.url }}"
+        aria-label="{{ product.title | escape }}{% unless tier_available %} - {{ 'products.product.sold_out' | t }}{% endunless %}"
+        data-product-id="{{ product.id }}"
+        {% if tier_variant != blank %}data-variant-id="{{ tier_variant.id }}"{% endif %}
+      >
+        <span class="purelane-bundle-tier__product-image">
+          {%- if tier_media != blank -%}
+            {{ tier_media | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 180, 240', sizes: '(min-width: 760px) 120px, 25vw', alt: tier_media.alt | default: product.title }}
+          {%- else -%}
+            {{ 'product-apparel-2' | placeholder_svg_tag: 'purelane-bundle-tier__placeholder' }}
+          {%- endif -%}
+        </span>
+        <span class="purelane-bundle-tier__product-title">{{ product.title | escape }}</span>
+        {%- unless tier_available -%}
+          <span class="purelane-bundle-tier__sold-out">{{ 'products.product.sold_out' | t }}</span>
+        {%- endunless -%}
+      </a>
+
+      {%- unless forloop.last -%}
+        <span class="purelane-bundle-tier__plus" aria-hidden="true">+</span>
+      {%- endunless -%}
+    {%- else -%}
+      <p class="purelane-bundle-tier__products-empty">Select products for this tier.</p>
+    {%- endfor -%}
+  </div>
+
+  <div class="purelane-bundle-tier__count" aria-label="{{ tier_product_count }} {{ tier_count_label | escape }}">
+    <strong>{{ tier_product_count }}</strong>
+    <span>{{ tier_count_label | escape }}</span>
+  </div>
+
+  {%- if block.settings.description != blank -%}
+    <p class="purelane-bundle-tier__description">{{ block.settings.description | escape }}</p>
+  {%- endif -%}
+
+  {%- if block.settings.benefits != blank -%}
+    <div class="purelane-bundle-tier__benefits rte">
+      {{ block.settings.benefits }}
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.fine_print != blank -%}
+    <p class="purelane-bundle-tier__fine-print">{{ block.settings.fine_print | escape }}</p>
+  {%- endif -%}
+
+  {%- if block.settings.cta_label != blank and tier_link != blank -%}
+    <a class="purelane-bundle-tier__cta" href="{{ tier_link }}">
+      {{ block.settings.cta_label | escape }}
+    </a>
+  {%- endif -%}
+</article>

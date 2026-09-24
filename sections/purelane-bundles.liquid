@@ -1,0 +1,166 @@
+{{ 'section-purelane-bundles.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="purelane-bundles-{{ section.id }}"
+  class="purelane-bundles color-{{ section.settings.color_scheme }} gradient"
+  aria-labelledby="purelane-bundles-heading-{{ section.id }}"
+>
+  <div class="purelane-bundles__wrap">
+    <header class="purelane-bundles__header">
+      <div class="purelane-bundles__header-panel">
+        {%- if section.settings.kicker != blank -%}
+          <p class="purelane-bundles__kicker">{{ section.settings.kicker | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 id="purelane-bundles-heading-{{ section.id }}" class="purelane-bundles__heading">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <div class="purelane-bundles__description rte">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="purelane-bundles__tiers" role="list">
+        {%- for block in section.blocks -%}
+          {% render 'purelane-bundle-tier', block: block, section_id: section.id %}
+        {%- endfor -%}
+      </div>
+    {%- elsif request.design_mode -%}
+      <p class="purelane-bundles__empty" role="status">
+        Add a bundle tier to begin building this section.
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Bundles",
+  "tag": "section",
+  "class": "section-purelane-bundles",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Build your bundle"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "One box. Every room."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Mix and match across kitchen, laundry, home and skin. One flat price, no code needed, free shipping either way.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bundle_tier",
+      "name": "Bundle tier",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tier_label",
+          "label": "Tier label",
+          "default": "Starter"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products",
+          "limit": 5
+        },
+        {
+          "type": "text",
+          "id": "product_count_label",
+          "label": "Product count label",
+          "default": "Products",
+          "info": "The number is always derived from the selected products. Edit this only for the label, such as Products or Items."
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Tier description"
+        },
+        {
+          "type": "richtext",
+          "id": "benefits",
+          "label": "Benefits",
+          "info": "Add a short bulleted list of benefits."
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Featured tier",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA label",
+          "default": "Build this box"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA link",
+          "info": "Use a real bundle product, collection, or curated landing page when available."
+        },
+        {
+          "type": "text",
+          "id": "fine_print",
+          "label": "Fine print"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Purelane Bundles",
+      "blocks": [
+        {
+          "type": "bundle_tier",
+          "settings": {
+            "tier_label": "Starter",
+            "product_count_label": "Products"
+          }
+        },
+        {
+          "type": "bundle_tier",
+          "settings": {
+            "tier_label": "Most popular",
+            "product_count_label": "Products",
+            "featured": true
+          }
+        },
+        {
+          "type": "bundle_tier",
+          "settings": {
+            "tier_label": "Whole home",
+            "product_count_label": "Products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
