@@ -1,0 +1,153 @@
+{{ 'section-purelane-combos.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="purelane-combos-{{ section.id }}"
+  class="purelane-combos"
+  aria-labelledby="purelane-combos-heading-{{ section.id }}"
+>
+  <div class="purelane-combos__wrap">
+    <header class="purelane-combos__header">
+      {%- if section.settings.kicker != blank -%}
+        <p class="purelane-combos__kicker">{{ section.settings.kicker | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 id="purelane-combos-heading-{{ section.id }}" class="purelane-combos__heading">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="purelane-combos__description rte">
+          {{ section.settings.description }}
+        </div>
+      {%- endif -%}
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="purelane-combos__rail" role="list" aria-label="{{ section.settings.heading | escape }}">
+        {%- for block in section.blocks -%}
+          {% render 'purelane-combo-card', block: block, section_id: section.id %}
+        {%- endfor -%}
+      </div>
+    {%- elsif request.design_mode -%}
+      <p class="purelane-combos__empty" role="status">
+        Add a combo block to begin building this section.
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.rail_note != blank -%}
+      <p class="purelane-combos__rail-note">{{ section.settings.rail_note | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.show_swipe_cue -%}
+      <p class="purelane-combos__swipe-cue" aria-hidden="true">Swipe to explore <span>→</span></p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Combos",
+  "tag": "section",
+  "class": "section-purelane-combos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Built for your home"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "One box. Every room."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Choose a curated combination of products for the rooms you care about most.</p>"
+    },
+    {
+      "type": "text",
+      "id": "rail_note",
+      "label": "Rail note",
+      "default": "Choose real products from your store to build each combo."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swipe_cue",
+      "label": "Show swipe cue",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "combo",
+      "name": "Combo",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Combo title",
+          "default": "Featured combination"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "A considered combination of products for your home."
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products",
+          "limit": 5
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "Badge label"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Featured combo",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA label",
+          "default": "Shop this bundle"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA link",
+          "info": "Link to a real bundle product, collection, or curated landing page."
+        },
+        {
+          "type": "text",
+          "id": "fine_print",
+          "label": "Fine print",
+          "default": "Product prices shown individually."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Purelane Combos",
+      "blocks": [
+        { "type": "combo" },
+        { "type": "combo" },
+        { "type": "combo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

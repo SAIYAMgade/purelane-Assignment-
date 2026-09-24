@@ -1,0 +1,63 @@
+{%- liquid
+  assign combo_products = block.settings.products
+  assign combo_link = block.settings.cta_link
+  if combo_link == blank and combo_products != blank
+    assign combo_link = combo_products.first.url
+  endif
+-%}
+
+<article
+  class="purelane-combo-card{% if block.settings.featured %} purelane-combo-card--featured{% endif %}"
+  role="listitem"
+  {{ block.shopify_attributes }}
+>
+  <div class="purelane-combo-card__tray">
+    {%- if block.settings.badge_label != blank -%}
+      <span class="purelane-combo-card__badge">{{ block.settings.badge_label | escape }}</span>
+    {%- endif -%}
+
+    <div class="purelane-combo-card__products">
+      {%- for product in combo_products -%}
+        {%- if forloop.index > 1 -%}
+          <span class="purelane-combo-card__plus" aria-hidden="true">+</span>
+        {%- endif -%}
+
+        <a class="purelane-combo-card__product" href="{{ product.url }}">
+          <span class="purelane-combo-card__product-media">
+            {%- if product.featured_media != blank -%}
+              {{ product.featured_media | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90, 120, 180', sizes: '80px', alt: product.featured_media.alt | default: product.title | escape }}
+            {%- else -%}
+              <span class="purelane-combo-card__product-placeholder" aria-hidden="true">{{ 'product-apparel-2' | placeholder_svg_tag }}</span>
+            {%- endif -%}
+          </span>
+          <span class="purelane-combo-card__product-title">{{ product.title | escape }}</span>
+          <span class="purelane-combo-card__product-price">{{ product.price | money }}</span>
+        </a>
+      {%- else -%}
+        <p class="purelane-combo-card__products-empty">Select products for this combo.</p>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="purelane-combo-card__body">
+    <h3 class="purelane-combo-card__title">{{ block.settings.title | escape }}</h3>
+
+    {%- if combo_products != blank -%}
+      <p class="purelane-combo-card__count">{{ combo_products.size }} products</p>
+    {%- endif -%}
+
+    {%- if block.settings.description != blank -%}
+      <p class="purelane-combo-card__description">{{ block.settings.description | escape }}</p>
+    {%- endif -%}
+
+    {%- if block.settings.fine_print != blank -%}
+      <p class="purelane-combo-card__fine-print">{{ block.settings.fine_print | escape }}</p>
+    {%- endif -%}
+
+    {%- if block.settings.cta_label != blank and combo_link != blank -%}
+      <a class="purelane-combo-card__cta" href="{{ combo_link }}">
+        {{ block.settings.cta_label | escape }}
+      </a>
+    {%- endif -%}
+  </div>
+</article>
