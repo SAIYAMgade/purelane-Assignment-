@@ -1,0 +1,277 @@
+<section
+  id="purelane-shop-{{ section.id }}"
+  class="purelane-shop color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="purelane-shop__wrap">
+    <header class="purelane-shop__header">
+      {% if section.settings.kicker != blank %}
+        <p class="purelane-shop__kicker">{{ section.settings.kicker | escape }}</p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="purelane-shop__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      <div class="purelane-shop__rule" aria-hidden="true">
+        <span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z" />
+          <path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z" />
+        </svg>
+        <span></span>
+      </div>
+
+      {% if section.settings.description != blank %}
+        <div class="purelane-shop__description rte">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+    </header>
+
+    {% if section.settings.collection == blank %}
+      <p class="purelane-shop__empty" role="status">
+        {{ 'sections.collection_template.empty' | t }}
+      </p>
+    {% elsif section.settings.collection.products_count == 0 %}
+      <p class="purelane-shop__empty" role="status">
+        {{ 'sections.collection_template.empty' | t }}
+      </p>
+    {% else %}
+      <ul class="purelane-shop__grid" role="list">
+        {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+          <li class="purelane-shop__item">
+            <article class="purelane-shop__placeholder">
+              <h3 class="purelane-shop__product-title" id="purelane-shop-product-{{ section.id }}-{{ product.id }}">
+                <a href="{{ product.url }}" aria-labelledby="purelane-shop-product-{{ section.id }}-{{ product.id }}">
+                  {{ product.title | escape }}
+                </a>
+              </h3>
+            </article>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #purelane-shop-{{ section.id }} {
+    --purelane-shop-max-width: 1180px;
+    --purelane-shop-section-gap: 34px;
+    --purelane-shop-grid-gap: 14px;
+    padding: var(--purelane-shop-section-gap) 0;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__wrap {
+    width: 100%;
+    max-width: var(--purelane-shop-max-width);
+    margin: 0 auto;
+    padding: 0 18px;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__header {
+    margin-bottom: 26px;
+    text-align: center;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__kicker {
+    margin: 0;
+    color: rgb(var(--color-foreground));
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__heading {
+    margin: 12px 0 0;
+    color: rgb(var(--color-foreground));
+    font-size: clamp(3rem, 4.6vw, 5.4rem);
+    line-height: .94;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__rule {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    max-width: 240px;
+    margin: 20px auto 0;
+    color: rgb(var(--color-foreground));
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__rule span {
+    height: 1px;
+    flex: 1;
+    background: currentColor;
+    opacity: .24;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__rule svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__description {
+    max-width: 44ch;
+    margin: 18px auto 0;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--purelane-shop-grid-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__placeholder {
+    min-height: 12rem;
+    padding: 16px;
+    border: 1px dashed rgba(var(--color-foreground), .24);
+    border-radius: 16px;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__product-title {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.2;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__product-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__product-title a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  #purelane-shop-{{ section.id }} .purelane-shop__empty {
+    margin: 0;
+    padding: 24px;
+    border: 1px dashed rgba(var(--color-foreground), .24);
+    text-align: center;
+  }
+
+  @media screen and (min-width: 860px) {
+    #purelane-shop-{{ section.id }} .purelane-shop__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 760px) {
+    #purelane-shop-{{ section.id }} {
+      --purelane-shop-section-gap: 22px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Purelane Shop",
+  "tag": "section",
+  "class": "section-purelane-shop",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 25,
+      "step": 1,
+      "default": 8,
+      "label": "Products to show"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by 30,000 homes"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show ratings",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Show product badges",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "quick_add",
+      "label": "Quick add",
+      "default": "standard",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "standard",
+          "label": "Standard"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "Show secondary image on hover",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "default": "adapt",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Shop"
+    }
+  ]
+}
+{% endschema %}
