@@ -9,7 +9,7 @@
 -%}
 
 <article
-  class="purelane-bundle-tier{% if block.settings.featured %} purelane-bundle-tier--featured{% endif %}"
+  class="purelane-bundle-tier purelane-bundle-tier--reveal purelane-bundle-tier--delay-{{ reveal_index | default: 0 }}{% if block.settings.featured %} purelane-bundle-tier--featured{% endif %}"
   role="listitem"
   {{ block.shopify_attributes }}
 >
