@@ -1,0 +1,174 @@
+{% comment %}
+  Renders a Purelane product card.
+
+  Accepts:
+  - product: {Object} Product Liquid object.
+  - section_id: {String} ID of the section containing the card.
+  - quick_add: {String} Quick-add mode. Supported values: none, standard.
+  - show_rating: {Boolean} Show populated Shopify review metafields.
+  - show_badge: {Boolean} Show product.metafields.custom.card_badge.
+  - show_secondary_image: {Boolean} Show the second product image on hover.
+  - lazy_load: {Boolean} Lazy-load the product image. Default: true.
+
+  Usage:
+  {% render 'purelane-product-card', product: product, section_id: section.id %}
+{% endcomment %}
+
+{%- liquid
+  assign card_section_id = section_id | default: 'purelane-product-card'
+  assign card_quick_add = quick_add | default: 'standard'
+  assign card_lazy_load = lazy_load | default: true
+  assign card_media = product.featured_media | default: product.featured_image
+  assign card_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'purelane-product-form-' | append: card_section_id | append: '-' | append: product.id
+  assign product_badge = product.metafields.custom.card_badge.value
+  assign product_rating = product.metafields.reviews.rating.value
+  assign product_rating_count = product.metafields.reviews.rating_count
+-%}
+
+{%- if product and product != empty -%}
+  <article class="purelane-product-card" data-product-id="{{ product.id }}">
+    <div class="purelane-product-card__media">
+      {%- if show_badge and product_badge != blank -%}
+        <span class="purelane-product-card__badge">{{ product_badge | escape }}</span>
+      {%- endif -%}
+
+      <a
+        class="purelane-product-card__media-link"
+        href="{{ product.url }}"
+        aria-label="{{ product.title | escape }}"
+      >
+        {%- if card_media != blank -%}
+          <img
+            srcset="
+              {%- if card_media.width >= 165 -%}{{ card_media | image_url: width: 165 }} 165w,{%- endif -%}
+              {%- if card_media.width >= 360 -%}{{ card_media | image_url: width: 360 }} 360w,{%- endif -%}
+              {%- if card_media.width >= 533 -%}{{ card_media | image_url: width: 533 }} 533w,{%- endif -%}
+              {%- if card_media.width >= 720 -%}{{ card_media | image_url: width: 720 }} 720w,{%- endif -%}
+              {%- if card_media.width >= 940 -%}{{ card_media | image_url: width: 940 }} 940w,{%- endif -%}
+              {{ card_media | image_url }} {{ card_media.width }}w
+            "
+            src="{{ card_media | image_url: width: 533 }}"
+            sizes="(min-width: 860px) calc((100vw - 96px) / 4), calc((100vw - 50px) / 2)"
+            alt="{{ card_media.alt | default: product.title | escape }}"
+            width="{{ card_media.width }}"
+            height="{{ card_media.height }}"
+            {% unless card_lazy_load == false %}loading="lazy"{% endunless %}
+          >
+
+          {%- if show_secondary_image and product.media[1] != blank -%}
+            <img
+              src="{{ product.media[1] | image_url: width: 533 }}"
+              alt=""
+              width="{{ product.media[1].width }}"
+              height="{{ product.media[1].height }}"
+              loading="lazy"
+              aria-hidden="true"
+            >
+          {%- endif -%}
+        {%- else -%}
+          {{ 'product-apparel-2' | placeholder_svg_tag: 'purelane-product-card__placeholder' }}
+        {%- endif -%}
+      </a>
+    </div>
+
+    <div class="purelane-product-card__content">
+      <h3 class="purelane-product-card__title">
+        <a href="{{ product.url }}">{{ product.title | escape }}</a>
+      </h3>
+
+      {%- if show_rating and product_rating != blank and product_rating_count != blank -%}
+        {%- liquid
+          assign rating_decimal = 0
+          assign rating_fraction = product_rating.rating | modulo: 1
+          if rating_fraction >= 0.3 and rating_fraction <= 0.7
+            assign rating_decimal = 0.5
+          elsif rating_fraction > 0.7
+            assign rating_decimal = 1
+          endif
+        -%}
+        <div class="purelane-product-card__rating" aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product_rating, rating_max: product_rating.scale_max }}">
+          <span
+            class="rating-star"
+            aria-hidden="true"
+            style="--rating: {{ product_rating.rating | floor }}; --rating-max: {{ product_rating.scale_max }}; --rating-decimal: {{ rating_decimal }};"
+          ></span>
+          <span aria-hidden="true">{{ product_rating }}</span>
+          <span aria-hidden="true">({{ product_rating_count }})</span>
+          <span class="visually-hidden">
+            {{ product_rating_count }} {{ 'accessibility.total_reviews' | t }}
+          </span>
+        </div>
+      {%- endif -%}
+
+      <div class="purelane-product-card__price">
+        {% render 'price', product: product, price_class: '', show_compare_at_price: true %}
+      </div>
+
+      <div class="purelane-product-card__actions">
+        {%- if product.available == false or card_variant == blank or card_variant.available == false -%}
+          <button type="button" class="purelane-product-card__button" disabled>
+            {{ 'products.product.sold_out' | t }}
+          </button>
+        {%- elsif card_quick_add == 'standard' and product.variants.size > 1 -%}
+          <modal-opener data-modal="#QuickAdd-{{ card_section_id }}-{{ product.id }}">
+            <button
+              id="{{ product_form_id }}-submit"
+              type="button"
+              class="purelane-product-card__button"
+              aria-haspopup="dialog"
+              aria-label="{{ 'products.product.choose_options' | t }}: {{ product.title | escape }}"
+              data-product-url="{{ product.url }}"
+            >
+              {{ 'products.product.choose_options' | t }}
+            </button>
+          </modal-opener>
+
+          <quick-add-modal id="QuickAdd-{{ card_section_id }}-{{ product.id }}" class="quick-add-modal">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label="{{ 'products.product.choose_product_options' | t: product_name: product.title | escape }}"
+              class="quick-add-modal__content global-settings-popup"
+              tabindex="-1"
+            >
+              <button
+                type="button"
+                class="quick-add-modal__toggle"
+                aria-label="{{ 'accessibility.close' | t }}"
+              >
+                {{- 'icon-close.svg' | inline_asset_content -}}
+              </button>
+              <div id="QuickAddInfo-{{ card_section_id }}-{{ product.id }}" class="quick-add-modal__content-info"></div>
+            </div>
+          </quick-add-modal>
+        {%- elsif card_quick_add == 'standard' -%}
+          <product-form data-section-id="{{ card_section_id }}">
+            {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input
+                type="hidden"
+                name="id"
+                value="{{ card_variant.id }}"
+                class="product-variant-id"
+              >
+              <button
+                id="{{ product_form_id }}-submit"
+                type="submit"
+                name="add"
+                class="purelane-product-card__button"
+                aria-label="{{ 'products.product.add_to_cart' | t }}: {{ product.title | escape }}"
+                aria-live="polite"
+              >
+                {{ 'products.product.add_to_cart' | t }}
+              </button>
+            {%- endform -%}
+          </product-form>
+        {%- else -%}
+          <a class="purelane-product-card__button" href="{{ product.url }}">
+            {{ 'products.product.choose_options' | t }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </article>
+{%- endif -%}
