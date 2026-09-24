@@ -15,10 +15,10 @@ The five completed sections are:
 ## 2. Shopify setup
 
 - Base theme: Shopify Dawn
-- Store workflow: local theme files are validated with Shopify Theme Check and pushed to the development theme for browser testing.
+- Store workflow: local theme files are validated with Shopify Theme Check and pushed to an explicitly targeted Shopify theme for browser testing and final submission.
 - Store: `saiyam-purelane.myshopify.com`
-- Development theme ID: `190431265135`
-- Development theme name: `Development (14080d-sam)`
+- Final submission theme ID: `190446633327`
+- Final submission theme name: `Purelane Build`
 
 The prototype HTML is a visual reference only and is intentionally not part of the repository.
 
@@ -175,17 +175,17 @@ Testing covered responsive transitions, horizontal rails, card sizing, CTA place
 
 ## 12. Development theme information
 
-Development store: `saiyam-purelane.myshopify.com`
+Final Shopify store: `saiyam-purelane.myshopify.com`
 
-Development theme: `Development (14080d-sam)`
+Final submission theme: `Purelane Build`
 
-Development theme ID: `190431265135`
+Final submission theme ID: `190446633327`
 
 Typical validation workflow:
 
 ```text
 shopify theme check
-shopify theme push --store=saiyam-purelane.myshopify.com --theme=190431265135
+shopify theme push --store=saiyam-purelane.myshopify.com --theme=190446633327
 ```
 
-The theme name and ID should be verified in the Shopify CLI confirmation prompt before pushing.
+The theme name and ID should be verified in the Shopify CLI confirmation prompt before pushing. The push must always include the explicit `--theme` argument.

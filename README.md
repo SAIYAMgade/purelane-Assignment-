@@ -1,6 +1,6 @@
 # Purelane Shopify Theme Assignment
 
-Purelane is a Dawn-based Shopify homepage implementation built from the supplied Purelane prototype. The five completed sections use Shopify-native Theme Editor settings and real Shopify product data where applicable.
+Purelane is a Dawn-based Shopify homepage implementation built from the supplied Purelane prototype. The final implementation uses Shopify-native Theme Editor settings and real Shopify product data where applicable.
 
 ## Sections
 
@@ -15,11 +15,15 @@ Reusable Purelane snippets support product cards, combo cards, bundle tiers, and
 ## Shopify setup
 
 - Base theme: Shopify Dawn
-- Development store: `saiyam-purelane.myshopify.com`
-- Development theme: `Development (14080d-sam)`
-- Development theme ID: `190431265135`
+- Final Shopify store: `saiyam-purelane.myshopify.com`
+- Final submission theme: `Purelane Build`
+- Final submission theme ID: `190446633327`
 
-Shop products use real products from the selected collection. Combos and bundles use Theme Editor blocks with Shopify `product_list` settings. Reviews use merchant-entered blocks; no review app integration is assumed.
+Shop uses real Shopify product data from the selected collection. Combos and Bundles use Shopify Theme Editor blocks with native `product_list` settings. Reviews use merchant-entered Theme Editor blocks; no review app integration is assumed.
+
+The development catalog contains eight real Shopify products. Product cards handle sold-out products, products without images, and long product titles. The implementation includes responsive behavior, accessibility handling, reduced-motion handling, and CSS-only review marquee behavior.
+
+Shopify Theme Check was run and the custom implementation introduced 0 new errors and 0 new warnings. Existing unrelated Dawn warnings remain documented in `BUILD_NOTES.md`.
 
 ## Local/development workflow
 
@@ -29,13 +33,13 @@ From the theme root:
 shopify theme check
 ```
 
-The development theme can be pushed with:
+The final submission theme can be pushed with:
 
 ```text
-shopify theme push --store=saiyam-purelane.myshopify.com --theme=190431265135
+shopify theme push --store=saiyam-purelane.myshopify.com --theme=190446633327
 ```
 
-Verify the CLI confirmation prompt names `Development (14080d-sam)` before confirming a push.
+Verify the CLI confirmation prompt names `Purelane Build` before confirming a push.
 
 ## Repository structure
 
